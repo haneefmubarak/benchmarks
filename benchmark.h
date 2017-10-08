@@ -18,10 +18,10 @@
 #define inline	inline __attribute__ ((always_inline))
 
 void inline *benchmark_setup (void *p);
-void benchmark_run (const void *restrict a, const void *restrict b);
+void benchmark_run (const void *restrict b, void *restrict a);
 
 #define	BENCHMARK_SETUP(b)	void inline *benchmark_setup (void *b)
-#define	BENCHMARK_RUN(a,b)	void benchmark_run (const void *restrict a, const void *restrict b) __attribute__ ((noinline))
+#define	BENCHMARK_RUN(b,a)	void benchmark_run (const void *restrict b, const void *restrict a) __attribute__ ((noinline))
 
 // returns ns
 static inline uint64_t rnow (void) {
@@ -56,7 +56,7 @@ int main (int argc, char **argv) {
 	for (x = 0; x < (BENCHMARK_ROUNDS * 2); x++) {
 		volatile const uint64_t start = rnow ();
 
-		benchmark_run (a, b);
+		benchmark_run (b, a);
 
 		const uint64_t end = rnow ();
 		const uint64_t t = llabs (end - start) - c;
