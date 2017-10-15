@@ -17,7 +17,8 @@ typedef struct {
 #include <sodium.h>
 
 // ciphertext + auth tag
-const int ciphertext_size = sizeof (((input){ 0 }).pt) + 32;
+#define	BENCHMARK__AEAD_AUTH_TAG_SZ	(32)
+const int ciphertext_size = sizeof (((input){ 0 }).pt) + BENCHMARK__AEAD_AUTH_TAG_SZ;
 
 BENCHMARK_SETUP (b) {
 	assert (!sodium_init ());
